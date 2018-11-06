@@ -1,0 +1,22 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+label {
+    margin-bottom: 15px;
+}
+
+label span {
+    display: block;
+}
+
+.setting-value {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    max-width: 400px;
+    margin: 0;
+}
