@@ -153,8 +153,8 @@ class Jbs_Site_Settings_Admin
 
         $data = get_option($this->plugin_name);
 
-        $setting_id = str_slug($_POST['setting_id']);
-        $setting_id = $setting_id ? $setting_id : str_slug($_POST['setting_name']);
+        $setting_id = sanitize_title($_POST['setting_id']);
+        $setting_id = $setting_id ? $setting_id : sanitize_title($_POST['setting_name']);
         $setting_value = $_POST['setting_value'];
         if ($setting_id) {
             $data[$setting_id] =
@@ -188,7 +188,7 @@ class Jbs_Site_Settings_Admin
     {
         /* Get Post */
 
-        $setting_id = str_slug($_POST['setting_name']);
+        $setting_id = sanitize_title($_POST['setting_name']);
 
         register_setting($this->plugin_name, $setting_id, array($this, 'validate'));
     }

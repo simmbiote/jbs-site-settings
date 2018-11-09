@@ -30,46 +30,60 @@ $options = get_option($plugin_name);
 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
 
-<?php if(count($options) > 0){ ?>
-<h2>Settings</h2>
-<table class="widefat fixed" cellspacing="0">
-    <thead>
-    <tr>
-        <th width="200" style="max-width: 200px" class="manage-column    ">Name</th>
-        <th class="manage-column    ">Value</th>
-        <!--        <th class="manage-column  ">Actions</th>-->
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($options as $option_id => $data) {
-        $values = $data['setting_value'];
-        ?>
-        <tr id="setting-<?php echo $option_id; ?>">
-            <td  ><strong><a data-setting-id="<?php echo $option_id; ?>"
-                           href="#edit-setting"><?php echo $data['setting_name']; ?></a></strong>
-                <div><em title="Usage: get_sim_setting('<?php echo $option_id; ?>')">ID: <?php echo $option_id; ?></em></div>
-            </td>
-            <td>
-                <table class="setting-values">
-                    <?php foreach ($values as $lang => $val) { ?>
-                        <tr data-lang="<?php echo $lang; ?>">
-                            <td><?php echo strtoupper($lang); ?></td>
-                            <td><textarea name="setting_<?php echo $option_id . '_' . $lang; ?>"
-                                          id="setting_<?php echo $option_id . '_' . $lang; ?>" cols="30"
-                                          class="hidden-field setting_value_holder"
-                                          rows="10"><?php echo stripslashes($val); ?></textarea>
-                                <pre class="small setting-value"><?php echo esc_html(stripslashes($val)); ?></pre>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            </td>
-            <!--            <td>Actions</td>-->
-
+<?php if ($options && count($options) > 0) { ?>
+    <h2>Settings</h2>
+    <table class="widefat fixed" cellspacing="0">
+        <thead>
+        <tr>
+            <th width="200" style="max-width: 200px" class="manage-column    ">Name</th>
+            <th class="manage-column    ">Value</th>
         </tr>
-    <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <?php foreach ($options as $option_id => $data) {
+            $values = $data['setting_value'];
+            ?>
+            <tr id="setting-<?php echo $option_id; ?>">
+                <td><strong><a data-setting-id="<?php echo $option_id; ?>"
+                               href="#edit-setting"><?php echo $data['setting_name']; ?></a></strong>
+                    <div>
+                        <em title="Usage: get_sim_setting('<?php echo $option_id; ?>')">ID: <?php echo $option_id; ?></em>
+                    </div>
+                </td>
+                <td>
+                    <table class="setting-values">
+                        <?php if (is_string($values)) {
+                            ?>
+                            <tr >
+                                <td>
+                            <textarea name="setting_<?php echo $option_id; ?>"
+                                      id="setting_<?php echo $option_id; ?>" cols="30"
+                                      class="hidden-field setting_value_holder"
+                                      rows="10"><?php echo stripslashes($values); ?></textarea>
+                                    <pre class="small setting-value"><?php echo esc_html(stripslashes($values)); ?></pre>
+                                </td>
+                            </tr>
+                            <?php
+                        } ?>
+                        <?php if (is_array($values)) {
+                            foreach ($values as $lang => $val) { ?>
+                                <tr data-lang="<?php echo $lang; ?>">
+                                    <td><?php echo strtoupper($lang); ?></td>
+                                    <td><textarea name="setting_<?php echo $option_id . '_' . $lang; ?>"
+                                                  id="setting_<?php echo $option_id . '_' . $lang; ?>" cols="30"
+                                                  class="hidden-field setting_value_holder"
+                                                  rows="10"><?php echo stripslashes($val); ?></textarea>
+                                        <pre class="small setting-value"><?php echo esc_html(stripslashes($val)); ?></pre>
+                                    </td>
+                                </tr>
+                            <?php }
+                        } ?>
+                    </table>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
 <?php } ?>
 
 
@@ -96,8 +110,8 @@ $options = get_option($plugin_name);
         <?php } else { ?>
 
             <tr>
-                <td align="top">Setting value (<?php echo $language['code']; ?>)</td>
-                <td align="top"><textarea name="setting_value" id="" cols="60" rows="5"></textarea>
+                <td align="top">Setting value</td>
+                <td align="top"><textarea id="setting_value" name="setting_value" id="" cols="60" rows="5"></textarea>
                 </td>
             </tr>
         <?php } ?>

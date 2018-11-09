@@ -2,7 +2,6 @@
 
 
     $(window).load(function () {
-        console.log(jQuery('a[data-setting-id]').length);
 
         $('a[data-setting-id]').each(function () {
 
@@ -15,32 +14,27 @@
                 var settingId = $(this).attr('data-setting-id');
                 var $form = $('#setting_options');
 
-                console.log(settingId);
-
                 $('#setting_id').val(settingId);
                 $('#setting_name').val($(this).text());
 
-                var settingValues = $('#setting-' + settingId).find('.setting-values');
+                var $settingValues = $('#setting-' + settingId).find('.setting-values');
 
-                var langRows = settingValues.find('tr');
+                var langRows = $settingValues.find('tr[data-lang]');
                 var $langs = [];
 
-                console.log('$(this).attr(\'data-lang\')', $(this).attr('data-lang'));
-
-
-                langRows.each(function () {
-
-                    if ($(this).attr('data-lang')) {
-                        $langs.push($(this).attr('data-lang'));
-                        $('#setting_value_' + $(this).attr('data-lang')).val($(this).find('.setting_value_holder').val());
-                    }
-                    /* Else... only one language... */
-
-                });
-
+                console.log('langRows.length', langRows.length);
+                if (langRows.length > 0) {
+                    langRows.each(function () {
+                        if ($(this).attr('data-lang')) {
+                            $langs.push($(this).attr('data-lang'));
+                            $('#setting_value_' + $(this).attr('data-lang')).val($(this).find('.setting_value_holder').val());
+                        }
+                    });
+                } else {
+                    $('#setting_value').val($('#setting_' + settingId).val());
+                }
 
                 $('body, html').animate({scrollTop: $('#form-heading').offset().top + 'px'}, 1500);
-
 
             })
 
@@ -51,8 +45,6 @@
 
 
         $('#setting_options').on('reset', function (e) {
-
-            console.log('reset');
 
             $('#form-heading').find('.mode').text('Create');
             $('#setting_id').val('')

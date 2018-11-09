@@ -21,6 +21,8 @@ Compatible with WPML - For each active language, a field for the setting value i
 Install using Composer:
 `composer require simmbiote/jbs-site-settings`
 
+Go to `Settings > Theme Settings` in the main menu.
+
 == Possible uses ==
 
 * Defining tracking codes.
@@ -34,7 +36,8 @@ Usage:
 
 == Features to come ==
 
-* Ability to export settings.
-* Ability to delete settings.
 * Shortcode for usage in editor content.
+* Ability to export settings.
+* Ability to import settings.
+* Ability to delete settings.
 
