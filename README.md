@@ -1,5 +1,4 @@
 === JBS Site Settings ===
-
 Contributors: simmbiote999
 Donate link: jbsimms.co.za
 Tags: settings, development, theming
