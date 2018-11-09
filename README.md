@@ -16,15 +16,21 @@ A WordPress Plugin that allows developers to easily add editable settings to a W
 A WordPress Plugin that allows developers to easily add editable settings to a WordPress installation.
 Compatible with WPML - For each active language, a field for the setting value is made available.
 
+== Installation ==
 
-Possible use-cases:
+Install using Composer:
+`composer require simmbiote/jbs-site-settings`
 
-Tracking codes
-Set a feature to enabled / disabled (eg. maintenance mode)
-Define a URL to your Facebook page and use the link anywhere.
+== Possible uses ==
+
+* Defining tracking codes.
+* Set a feature to enabled / disabled (eg. maintenance mode).
+* Add password-protection to your site.
+* Define the URL to your Facebook page and use the link anywhere.
 
 Usage:
 `<?php echo get_sim_setting('your-setting-id'); ?>`
+
 
 == Features to come ==
 
