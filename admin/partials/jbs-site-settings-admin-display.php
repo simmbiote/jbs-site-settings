@@ -29,6 +29,8 @@ $options = get_option($plugin_name);
 
 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
+
+<?php if(count($options) > 0){ ?>
 <h2>Settings</h2>
 <table class="widefat fixed" cellspacing="0">
     <thead>
@@ -45,7 +47,7 @@ $options = get_option($plugin_name);
         <tr id="setting-<?php echo $option_id; ?>">
             <td  ><strong><a data-setting-id="<?php echo $option_id; ?>"
                            href="#edit-setting"><?php echo $data['setting_name']; ?></a></strong>
-                <div><em><?php echo $option_id; ?></em></div>
+                <div><em title="Usage: get_sim_setting('<?php echo $option_id; ?>')">ID: <?php echo $option_id; ?></em></div>
             </td>
             <td>
                 <table class="setting-values">
@@ -55,8 +57,8 @@ $options = get_option($plugin_name);
                             <td><textarea name="setting_<?php echo $option_id . '_' . $lang; ?>"
                                           id="setting_<?php echo $option_id . '_' . $lang; ?>" cols="30"
                                           class="hidden-field setting_value_holder"
-                                          rows="10"><?php echo $val; ?></textarea>
-                                <pre class="small setting-value"><?php echo esc_html($val); ?></pre>
+                                          rows="10"><?php echo stripslashes($val); ?></textarea>
+                                <pre class="small setting-value"><?php echo esc_html(stripslashes($val)); ?></pre>
                             </td>
                         </tr>
                     <?php } ?>
@@ -68,6 +70,8 @@ $options = get_option($plugin_name);
     <?php } ?>
     </tbody>
 </table>
+<?php } ?>
+
 
 <h2 id="form-heading"><span class="mode">Create</span> Setting</h2>
 

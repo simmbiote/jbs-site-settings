@@ -1,0 +1,14 @@
+{
+    "name": "simmbiote/jbs-site-settings",
+    "type": "wp-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Simmbiote",
+            "email": "john@jbsimms.co.za"
+        }
+    ],
+    "require": {
+		"composer/installers": "~1.0"
+	}
+}
