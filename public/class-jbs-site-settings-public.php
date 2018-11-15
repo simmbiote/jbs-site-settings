@@ -54,6 +54,9 @@ class Jbs_Site_Settings_Public
         $this->plugin_name = $plugin_name;
         $this->version = $version;
 
+        /* Set up shortcodes. */
+        $this->shortcodes();
+
     }
 
     /**
@@ -120,6 +123,17 @@ class Jbs_Site_Settings_Public
         }
         return $setting;
 
+    }
+
+    private function shortcodes()
+    {
+
+        /* [site-setting id="" ]*/
+        add_shortcode('site-setting', function ($attributes) {
+            if ($attributes['id']) {
+                return self::get_setting($attributes['id']);
+            }
+        });
     }
 
 }

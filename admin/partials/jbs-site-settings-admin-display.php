@@ -31,12 +31,13 @@ $options = get_option($plugin_name);
 
 
 <?php if ($options && count($options) > 0) { ?>
-    <h2>Settings</h2>
+    <h2><?php _e('Settings', 'sim-settings'); ?></h2>
     <table class="widefat fixed" cellspacing="0">
         <thead>
         <tr>
-            <th width="200" style="max-width: 200px" class="manage-column    ">Name</th>
-            <th class="manage-column    ">Value</th>
+            <th width="200" style="max-width: 200px" class="manage-column    "><?php _e('Name', 'sim-settings'); ?></th>
+            <th class="manage-column "><?php _e('Value', 'sim-settings'); ?></th>
+            <th class="manage-column "><?php _e('Shortcode', 'sim-settings'); ?></th>
         </tr>
         </thead>
         <tbody>
@@ -47,14 +48,15 @@ $options = get_option($plugin_name);
                 <td><strong><a data-setting-id="<?php echo $option_id; ?>"
                                href="#edit-setting"><?php echo $data['setting_name']; ?></a></strong>
                     <div>
-                        <em title="Usage: get_sim_setting('<?php echo $option_id; ?>')">ID: <?php echo $option_id; ?></em>
+                        <em title="Usage: get_sim_setting('<?php echo $option_id; ?>')"><?php _e('ID', 'sim-settings'); ?>
+                            : <?php echo $option_id; ?></em>
                     </div>
                 </td>
                 <td>
                     <table class="setting-values">
                         <?php if (is_string($values)) {
                             ?>
-                            <tr >
+                            <tr>
                                 <td>
                             <textarea name="setting_<?php echo $option_id; ?>"
                                       id="setting_<?php echo $option_id; ?>" cols="30"
@@ -80,6 +82,12 @@ $options = get_option($plugin_name);
                         } ?>
                     </table>
                 </td>
+                <td>
+                    <input title="<?php __('Click to select and copy the shortcode to your clipboard.', 'sim-settings'); ?>"
+                           type="text" readonly class="short-code-selector" width="100%"
+                           value='[site-setting id="<?php echo $option_id; ?>"]'
+                           onclick="this.select();  document.execCommand('copy');">
+                </td>
             </tr>
         <?php } ?>
         </tbody>
@@ -87,21 +95,21 @@ $options = get_option($plugin_name);
 <?php } ?>
 
 
-<h2 id="form-heading"><span class="mode">Create</span> Setting</h2>
+<h2 id="form-heading"><span
+            class="mode"><?php _e('Create', 'sim-settings'); ?></span> <?php _e('Setting', 'sim-settings'); ?></h2>
 
 <form method="post" name="setting_options" id="setting_options" action="options.php">
     <?php settings_fields($this->plugin_name); ?>
     <input type="hidden" name="setting_id" id="setting_id">
     <table class="form-table">
         <tr>
-            <td align="top" width="150"><span>Setting Name</span></td>
+            <td align="top" width="150"><span><?php _e('Setting Name', 'sim-settings'); ?></span></td>
             <td><input placeholder="Setting name" required type="text" id="setting_name" name="setting_name"></td>
         </tr>
         <?php if (isset($sitepress) && count($languages) > 0) { ?>
             <?php foreach ($languages as $language) { ?>
                 <tr>
-                    <td align="top">Setting
-                        value <?php echo '(' . strtoupper($language['code']) . ')'; ?> <?php echo $language['code'] == $default_language ? "(Default)" : ""; ?></td>
+                    <td align="top"><?php _e('Setting Value', 'sim-settings'); ?><?php echo '(' . strtoupper($language['code']) . ')'; ?><?php echo $language['code'] == $default_language ? "(Default)" : ""; ?></td>
                     <td align="top"><textarea name="setting_value[<?php echo $language['code']; ?>]"
                                               id="setting_value_<?php echo $language['code']; ?>" cols="60"
                                               rows="5"></textarea></td>
@@ -110,18 +118,18 @@ $options = get_option($plugin_name);
         <?php } else { ?>
 
             <tr>
-                <td align="top">Setting value</td>
+                <td align="top"><?php _e('Setting Value', 'sim-settings'); ?></td>
                 <td align="top"><textarea id="setting_value" name="setting_value" id="" cols="60" rows="5"></textarea>
                 </td>
             </tr>
         <?php } ?>
         <!--       <tr>
-                   <td align="top">Notes (optional)</td>
+                   <td align="top"><?php _e('Notes (optional)', 'sim-settings'); ?></td>
                    <td align="top"><textarea name="setting_notes" id="" cols="60" rows="5"></textarea>
                    </td>
                </tr>-->
     </table>
 
-    <?php submit_button('Save'); ?>
-    <button type="reset" class="button ">Cancel</button>
+    <?php submit_button(__('Save', 'sim-settings')); ?>
+    <button type="reset" class="button "><?php _e('Cancel', 'sim-settings'); ?></button>
 </form>

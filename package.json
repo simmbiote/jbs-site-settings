@@ -1,0 +1,14 @@
+{
+  "name": "jbs-site-settings",
+  "version": "1.0.0",
+  "description": "=== JBS Site Settings ===",
+  "main": "scripts/index.js",
+  "scripts": {
+    "translate": "node ./scripts/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wp-pot": "^1.6.4"
+  }
+}
