@@ -31,12 +31,17 @@ Go to `Settings > Theme Settings` in the main menu.
 * Define the URL to your Facebook page and use the link anywhere.
 
 Usage:
+
+Shortcode:
+`[site-setting id="your-setting-id"]`
+
+PHP
 `<?php echo get_sim_setting('your-setting-id'); ?>`
 
 
 == Features to come ==
 
-* Shortcode for usage in editor content.
+✓ Shortcode for usage in editor content.
 * Ability to export settings.
 * Ability to import settings.
 * Ability to delete settings.
