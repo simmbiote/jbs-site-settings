@@ -1,6 +1,5 @@
 {
     "name": "simmbiote/jbs-site-settings",
-	"version":  "0.7",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [
