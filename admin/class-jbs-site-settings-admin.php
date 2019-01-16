@@ -54,6 +54,17 @@ class Jbs_Site_Settings_Admin
         $this->plugin_name = $plugin_name;
         $this->version = $version;
 
+        if (isset($_POST['export_settings'])) {
+            $this->export_settings();
+        }
+
+
+        if (isset($_POST['import_settings'])) {
+
+            $this->import_file = $_FILES['settings_file'];
+            $this->import_settings();
+        }
+
     }
 
     /**
@@ -153,20 +164,36 @@ class Jbs_Site_Settings_Admin
 
         $data = get_option($this->plugin_name);
 
-        $setting_id = sanitize_title($_POST['setting_id']);
-        $setting_id = $setting_id ? $setting_id : sanitize_title($_POST['setting_name']);
-        $setting_value = $_POST['setting_value'];
-        if ($setting_id) {
-            $data[$setting_id] =
-                [
-                    'setting_name' => $_POST['setting_name'],
-                    'setting_value' => $setting_value
+        if ($this->import_file) {
+            $file_contents = file_get_contents($this->import_file['tmp_name']);
+
+            $decoded = json_decode($file_contents);
+            foreach ((array)$decoded as $setting_id => $setting_data) {
+                $setting_data = (array)$setting_data;
+                $data[$setting_id] = [
+                    'setting_name' => $setting_data['setting_name'],
+                    'setting_value' => $setting_data['setting_value'],
                 ];
 
+            }
         }
+
+        if (isset($_POST['setting_id']) && $_POST['setting_id']) {
+            $setting_id = sanitize_title($_POST['setting_id']);
+            $setting_id = $setting_id ? $setting_id : sanitize_title($_POST['setting_name']);
+            $setting_value = $_POST['setting_value'];
+            if ($setting_id) {
+                $data[$setting_id] =
+                    [
+                        'setting_name' => $_POST['setting_name'],
+                        'setting_value' => $setting_value
+                    ];
+
+            }
+        }
+
         return $data;
     }
-
 
     /**
      * On Update
@@ -174,10 +201,7 @@ class Jbs_Site_Settings_Admin
 
     public function options_update()
     {
-
-
         register_setting($this->plugin_name, $this->plugin_name, [$this, 'validate']);
-
     }
 
 
@@ -186,11 +210,9 @@ class Jbs_Site_Settings_Admin
 
     public function create_setting()
     {
-        /* Get Post */
-
         $setting_id = sanitize_title($_POST['setting_name']);
-
         register_setting($this->plugin_name, $setting_id, array($this, 'validate'));
+
     }
 
 
@@ -202,10 +224,34 @@ class Jbs_Site_Settings_Admin
 
     public function delete_setting($option_name)
     {
-
         unregister_setting($this->plugin_name, $option_name);
-
     }
 
+
+    public function export_settings()
+    {
+        $settings = get_option($this->plugin_name);
+        header('Content-type: text/plain');
+        header("Content-Disposition: attachment; filename=site-settings-" . date("Y-m-d") . ".txt");
+        echo json_encode($settings);
+        exit();
+    }
+
+    public function import_settings()
+    {
+
+        $errors = [];
+
+        if ($this->import_file['error']) {
+            $errors[] = "An error occurred: Code " . $this->import_file['error'];
+        }
+
+        if ($this->import_file['type'] !== "text/plain" || $this->import_file['size'] < 1) {
+            $errors[] = "Invalid file";
+        }
+
+        update_option($this->plugin_name, $this->validate(''));
+
+    }
 
 }

@@ -50,6 +50,16 @@
             $('#setting_id').val('')
 
 
+        });
+
+        $('.settings-tabs a').on('click', function (e) {
+            e.preventDefault();
+
+            var $targetTab = $($(this).attr('href'));
+
+            $('.setting-tab.active-tab').removeClass('active-tab');
+            $targetTab.addClass('active-tab');
+
         })
     })
 
