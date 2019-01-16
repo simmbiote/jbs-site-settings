@@ -41,8 +41,8 @@ PHP
 
 == Features to come ==
 
-✓ Shortcode for usage in editor content.
-✓ Ability to export settings.
-✓ Ability to import settings.
+✓ Shortcode for usage in editor content. \
+✓ Ability to export settings. \
+✓ Ability to import settings. \
 * Ability to delete settings.
 
