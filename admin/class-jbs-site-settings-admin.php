@@ -162,7 +162,7 @@ class Jbs_Site_Settings_Admin
     public function validate($input)
     {
 
-        $data = get_option($this->plugin_name);
+         $data = get_option($this->plugin_name);
 
         if ($this->import_file) {
             $file_contents = file_get_contents($this->import_file['tmp_name']);
@@ -176,9 +176,12 @@ class Jbs_Site_Settings_Admin
                 ];
 
             }
+
+            return $data;
+
         }
 
-        if (isset($_POST['setting_id']) && $_POST['setting_id']) {
+        if (isset($_POST['setting_id'])) {
             $setting_id = sanitize_title($_POST['setting_id']);
             $setting_id = $setting_id ? $setting_id : sanitize_title($_POST['setting_name']);
             $setting_value = $_POST['setting_value'];
@@ -188,11 +191,21 @@ class Jbs_Site_Settings_Admin
                         'setting_name' => $_POST['setting_name'],
                         'setting_value' => $setting_value
                     ];
-
+            }
+        } else {
+            $setting_id = sanitize_title($_POST['setting_name']);
+            $setting_value = $_POST['setting_value'];
+            if ($setting_id) {
+                $data[$setting_id] =
+                    [
+                        'setting_name' => $_POST['setting_name'],
+                        'setting_value' => $setting_value
+                    ];
             }
         }
-
         return $data;
+		
+		
     }
 
     /**
